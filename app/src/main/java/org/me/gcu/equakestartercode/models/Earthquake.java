@@ -6,20 +6,12 @@ public class Earthquake {
     private String title;
     private String description;
     private String link;
-    private Date pubDate;
+    private String pubDate;
     private String category;
     private double geoLat;
     private double geoLong;
 
-    public Earthquake(String title, String description, String link, Date pubDate, double geoLat, double geoLong){
-        this.title = title;
-        this.description = description;
-        this.link = link;
-        this.pubDate = pubDate;
-        this.category = "EQUK";
-        this.geoLat = geoLat;
-        this.geoLong = geoLong;
-    }
+    public Earthquake(){ }
 
     public String getTitle() {
         return title;
@@ -45,11 +37,11 @@ public class Earthquake {
         this.link = link;
     }
 
-    public Date getPubDate() {
+    public String getPubDate() {
         return pubDate;
     }
 
-    public void setPubDate(Date pubDate) {
+    public void setPubDate(String pubDate) {
         this.pubDate = pubDate;
     }
 
