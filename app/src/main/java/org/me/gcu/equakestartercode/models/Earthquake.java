@@ -1,7 +1,5 @@
 package org.me.gcu.equakestartercode.models;
 
-import java.util.Date;
-
 public class Earthquake {
     private String title;
     private String description;
@@ -67,5 +65,12 @@ public class Earthquake {
 
     public void setGeoLong(double geoLong) {
         this.geoLong = geoLong;
+    }
+
+    public String toString(){
+        String str = "";
+        str += "Title: " + getTitle() + " Description: " + getDescription() + " Link: " + getLink() +
+                " PubDate: " + getPubDate() + "Category: " + getCategory() + " GeoLat: " + getGeoLat() + " GeoLong: " + getGeoLong();
+        return str;
     }
 }
