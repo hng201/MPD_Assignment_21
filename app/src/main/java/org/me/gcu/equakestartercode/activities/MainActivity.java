@@ -105,21 +105,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     }
 
                 }
-                in.close();
-            }
-            catch (IOException ae)
-            {
-                Log.e("MyTag", "ioexception in run");
-            }
-
-            ArrayList<Earthquake> earthquakeList = null;
-            Earthquake earthquake = null;
-            result = result.substring(4);
-            result = result.substring(0, result.length() -6);
-            //
-            // Now that you have the xml data you can parse it
-            //
-            try {
+                ArrayList<Earthquake> earthquakeList = null;
+                Earthquake earthquake = null;
+                result = result.substring(4);
+                result = result.substring(0, result.length() -6);
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 //factory.setNamespaceAware(true);
 
@@ -132,44 +121,58 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     if(eventType == XmlPullParser.START_DOCUMENT) {
                         Log.e("MyTag","Start document");
                         earthquakeList = new ArrayList<>();
-                        if (eventType == XmlPullParser.START_TAG) {
-                            if(xpp.getName().equalsIgnoreCase("item")){
-                                System.out.println("Item");
-                                earthquake = new Earthquake();
-                            }
-                            else if (xpp.getName().equalsIgnoreCase("title")) {
+
+                    }
+                    else if (eventType == XmlPullParser.START_TAG) {
+                        Log.e("Current Tag", xpp.getName());
+                        if(xpp.getName().equalsIgnoreCase("item")){
+                            Log.e("Item", "start");
+                            earthquake = new Earthquake();
+                        }
+                        else if (earthquake != null){
+                            if (xpp.getName().equalsIgnoreCase("title")) {
                                 String title = xpp.nextText();
                                 earthquake.setTitle(title);
-                            } else if (xpp.getName().equalsIgnoreCase("description")) {
+                                Log.e("Title is", earthquake.getTitle());
+                            }
+                            else if (xpp.getName().equalsIgnoreCase("description")) {
                                 String description = xpp.nextText();
                                 earthquake.setDescription(description);
-                            } else if (xpp.getName().equalsIgnoreCase("link")) {
+                                Log.e("Description is", earthquake.getDescription());
+                            }
+                            else if (xpp.getName().equalsIgnoreCase("link")) {
                                 String link = xpp.nextText();
                                 earthquake.setLink(link);
-                            } else if (xpp.getName().equalsIgnoreCase("pubDate")) {
+                                Log.e("Link is", earthquake.getLink());
+                            }
+                            else if (xpp.getName().equalsIgnoreCase("pubDate")) {
                                 String pubDate = xpp.nextText();
                                 earthquake.setPubDate(pubDate);
-                            } else if (xpp.getName().equalsIgnoreCase("category")) {
+                                Log.e("pubDate is", earthquake.getPubDate());
+                            }
+                            else if (xpp.getName().equalsIgnoreCase("category")) {
                                 String category = xpp.nextText();
                                 earthquake.setCategory(category);
-                            } else if (xpp.getName().equalsIgnoreCase("geo:lat")) {
-                                Log.e("My Tag", xpp.nextText());
+                                Log.e("Category is", earthquake.getCategory());
+                            }
+                            else if (xpp.getName().equalsIgnoreCase("geo:lat")) {
                                 double geoLat = Double.parseDouble(xpp.nextText());
                                 earthquake.setGeoLat(geoLat);
-                            } else if (xpp.getName().equalsIgnoreCase("geo:long")) {
+                                Log.e("Geo:lat is", String.valueOf(earthquake.getGeoLat()));
+                            }
+                            else if (xpp.getName().equalsIgnoreCase("geo:long")) {
                                 double geoLong = Double.parseDouble(xpp.nextText());
                                 earthquake.setGeoLong(geoLong);
+                                Log.e("Geo:long is", String.valueOf(earthquake.getGeoLong()));
+                                earthquakeList.add(earthquake);
+                                Log.e("Added", earthquake.toString());
                             }
+                        }
 
 
-                        }
+
                     }
-                    else if(eventType == XmlPullParser.END_TAG){
-                        if(xpp.getName().equalsIgnoreCase("item")) {
-                            System.out.println("Earthquake added");
-                            earthquakeList.add(earthquake);
-                        }
-                    }
+
 
                     eventType = xpp.next();
                 }
@@ -183,6 +186,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             {
                 Log.e("MyTag","IO error during parsing");
             }
+
+
+            // Now that you have the xml data you can parse it
+            //
 
             // Now update the TextView to display raw XML data
             // Probably not the best way to update TextView
