@@ -138,7 +138,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                             else if (xpp.getName().equalsIgnoreCase("description")) {
                                 String description = xpp.nextText();
                                 earthquake.setDescription(description);
+                                String[] temp = description.split(";");
+                                earthquake.setLocation(temp[1].split(" ")[2]);
+                                earthquake.setDepth(Integer.parseInt(temp[3].replaceAll("[^0-9\\.]+", "")));
+                                earthquake.setMagnitude(Double.parseDouble(temp[4].replaceAll("[^0-9\\.]+", "")));
                                 Log.e("Description is", earthquake.getDescription());
+                                Log.e("Location is", earthquake.getLocation());
+                                Log.e("Depth is", String.valueOf(earthquake.getDepth()));
+                                Log.e("Magnitude is", String.valueOf(earthquake.getMagnitude()));
                             }
                             else if (xpp.getName().equalsIgnoreCase("link")) {
                                 String link = xpp.nextText();
