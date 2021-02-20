@@ -72,8 +72,9 @@ public class Earthquake {
 
     public String toString(){
         String str = "";
-        str += "Title: " + getTitle() + " Description: " + getDescription() + " Link: " + getLink() +
-                " PubDate: " + getPubDate() + "Category: " + getCategory() + " GeoLat: " + getGeoLat() + " GeoLong: " + getGeoLong();
+        str += "Title: " + getTitle() + " Description: " + getDescription() +" Location: " + getLocation() + " Depth: " + getDepth() +
+                "  Magnitude: " + getMagnitude() + " Link: " + getLink() + " PubDate: " + getPubDate() + " Category: " + getCategory()
+                + " GeoLat: " + getGeoLat() + " GeoLong: " + getGeoLong();
         return str;
     }
 
