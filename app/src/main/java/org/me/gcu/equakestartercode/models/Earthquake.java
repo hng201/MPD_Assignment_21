@@ -3,6 +3,9 @@ package org.me.gcu.equakestartercode.models;
 public class Earthquake {
     private String title;
     private String description;
+    private String location;
+    private Integer depth;
+    private Double magnitude;
     private String link;
     private String pubDate;
     private String category;
@@ -72,5 +75,29 @@ public class Earthquake {
         str += "Title: " + getTitle() + " Description: " + getDescription() + " Link: " + getLink() +
                 " PubDate: " + getPubDate() + "Category: " + getCategory() + " GeoLat: " + getGeoLat() + " GeoLong: " + getGeoLong();
         return str;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Integer getDepth() {
+        return depth;
+    }
+
+    public void setDepth(Integer depth) {
+        this.depth = depth;
+    }
+
+    public Double getMagnitude() {
+        return magnitude;
+    }
+
+    public void setMagnitude(Double magnitude) {
+        this.magnitude = magnitude;
     }
 }
