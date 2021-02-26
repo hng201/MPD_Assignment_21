@@ -16,7 +16,11 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import org.me.gcu.equakestartercode.R;
 import org.me.gcu.equakestartercode.models.Earthquake;
@@ -153,9 +157,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                                 Log.e("Link is", earthquake.getLink());
                             }
                             else if (xpp.getName().equalsIgnoreCase("pubDate")) {
-                                String pubDate = xpp.nextText();
+                                String temp = xpp.nextText();
+                                SimpleDateFormat sdfr = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.ENGLISH);
+                                Date pubDate = sdfr.parse(temp);
                                 earthquake.setPubDate(pubDate);
-                                Log.e("pubDate is", earthquake.getPubDate());
+                                Log.e("pubDate is", earthquake.getPubDate().toString());
                             }
                             else if (xpp.getName().equalsIgnoreCase("category")) {
                                 String category = xpp.nextText();
@@ -192,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             catch (IOException ae1)
             {
                 Log.e("MyTag","IO error during parsing");
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
 
