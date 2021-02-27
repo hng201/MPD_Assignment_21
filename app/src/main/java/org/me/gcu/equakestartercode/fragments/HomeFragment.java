@@ -39,10 +39,8 @@ import java.util.regex.Pattern;
 
 public class HomeFragment extends Fragment implements OnClickListener
 {
-    private TextView rawDataDisplay;
     private Button startButton;
     private String result;
-    private String url1="";
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     private ProgressBar pbData;
     private TextView tvProgress;
@@ -56,7 +54,6 @@ public class HomeFragment extends Fragment implements OnClickListener
 
         Log.e("MyTag","in onCreate");
         // Set up the raw links to the graphical components
-        rawDataDisplay = (TextView)view.findViewById(R.id.rawDataDisplay);
         startButton = (Button)view.findViewById(R.id.startButton);
         startButton.setOnClickListener(this);
         Log.e("MyTag","after startButton");
@@ -264,7 +261,6 @@ public class HomeFragment extends Fragment implements OnClickListener
             startButton.setText("Update Data");
             updateData(earthquakeList);
            // pbData.setVisibility(View.INVISIBLE);
-            //rawDataDisplay.setText(result.toString());
         }
     }
 
