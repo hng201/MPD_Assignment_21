@@ -1,122 +1,81 @@
 package org.me.gcu.equakestartercode.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.view.MenuItem;
 
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.me.gcu.equakestartercode.R;
+import org.me.gcu.equakestartercode.fragments.HomeFragment;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener
-{
-    private TextView rawDataDisplay;
-    private Button startButton;
-    private String result;
-    private String url1="";
-    private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
+public class MainActivity extends AppCompatActivity {
+    private BottomNavigationView bnView;
+    private ActionBar toolbar;
 
+    /**
+     * Sets the content to be displayed to activity_main
+     * and assigns references to components.
+     * Initial fragment HomeFragment is loaded.
+     * @param savedInstance
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
-        Log.e("MyTag","in onCreate");
-        // Set up the raw links to the graphical components
-        rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
-        startButton = (Button)findViewById(R.id.startButton);
-        startButton.setOnClickListener(this);
-        Log.e("MyTag","after startButton");
-        // More Code goes here
+        bnView = findViewById(R.id.bnView);
+        bnView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        // Set the active menu item in the BottomNavigationView
+        bnView.getMenu().getItem(0).setChecked(true);
+
+        toolbar = getSupportActionBar();
+        toolbar.setTitle("Home");
+        Fragment fragment = new HomeFragment();
+        loadFragment(fragment);
     }
 
-    public void onClick(View aview)
-    {
-        Log.e("MyTag","in onClick");
-        startProgress();
-        Log.e("MyTag","after startProgress");
+    /**
+     * Used to load new fragments
+     * @param fragment the fragment to be loaded
+     */
+    private void loadFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace current fragment with new fragment
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.commit();
     }
 
-    public void startProgress()
-    {
-        // Run network access on a separate thread;
-        new Thread(new Task(urlSource)).start();
-    } //
 
-    // Need separate thread to access the internet resource over network
-    // Other neater solutions should be adopted in later iterations.
-    private class Task implements Runnable
-    {
-        private String url;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        public Task(String aurl)
-        {
-            url = aurl;
-        }
+        /**
+         * Used to identify which menu item has been selected.
+         * For the selected menu item, load the corresponding fragment and
+         * set an appropriate Title on the toolbar for screen
+         * @param item
+         * @return true indicates a particular menu item has been selected
+         */
         @Override
-        public void run()
-        {
-
-            URL aurl;
-            URLConnection yc;
-            BufferedReader in = null;
-            String inputLine = "";
-
-
-            Log.e("MyTag","in run");
-
-            try
-            {
-                Log.e("MyTag","in try");
-                aurl = new URL(url);
-                yc = aurl.openConnection();
-                in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                Log.e("MyTag","after ready");
-                //
-                // Throw away the first 2 header lines before parsing
-                //
-                //
-                //
-                while ((inputLine = in.readLine()) != null)
-                {
-                    result = result + inputLine;
-                    Log.e("MyTag",inputLine);
-
-                }
-                in.close();
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    toolbar.setTitle("Home");
+                    loadFragment(new HomeFragment());
+                    return true;
+                case R.id.search:
+                    toolbar.setTitle("Search");
+                    return true;
+                case R.id.map:
+                    toolbar.setTitle("Map View");
+                    return true;
             }
-            catch (IOException ae)
-            {
-                Log.e("MyTag", "ioexception in run");
-            }
-
-            //
-            // Now that you have the xml data you can parse it
-            //
-
-            // Now update the TextView to display raw XML data
-            // Probably not the best way to update TextView
-            // but we are just getting started !
-
-            MainActivity.this.runOnUiThread(new Runnable()
-            {
-                public void run() {
-                    Log.d("UI thread", "I am the UI thread");
-                    rawDataDisplay.setText(result);
-                }
-            });
+            return false;
         }
-
-    }
-
+    };
 }
