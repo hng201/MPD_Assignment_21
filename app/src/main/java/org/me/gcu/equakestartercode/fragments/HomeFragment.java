@@ -1,17 +1,23 @@
-package org.me.gcu.equakestartercode.activities;
-
-import androidx.appcompat.app.AppCompatActivity;
+package org.me.gcu.equakestartercode.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
+import org.me.gcu.equakestartercode.R;
+import org.me.gcu.equakestartercode.models.Earthquake;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,13 +33,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.me.gcu.equakestartercode.R;
-import org.me.gcu.equakestartercode.models.Earthquake;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-public class MainActivity extends AppCompatActivity implements OnClickListener
+public class HomeFragment extends Fragment implements OnClickListener
 {
     private TextView rawDataDisplay;
     private Button startButton;
@@ -44,19 +44,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private TextView tvProgress;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         Log.e("MyTag","in onCreate");
         // Set up the raw links to the graphical components
-        rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
-        startButton = (Button)findViewById(R.id.startButton);
+        rawDataDisplay = (TextView)view.findViewById(R.id.rawDataDisplay);
+        startButton = (Button)view.findViewById(R.id.startButton);
         startButton.setOnClickListener(this);
         Log.e("MyTag","after startButton");
         // More Code goes here
-        pbData = findViewById(R.id.pbData);
-        tvProgress = findViewById(R.id.tvProgress);
+        pbData = view.findViewById(R.id.pbData);
+        tvProgress = view.findViewById(R.id.tvProgress);
+        return view;
     }
 
     public void onClick(View aview)
@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             // update the UI immediately after the task is executed
             super.onPreExecute();
 
-            Toast.makeText(MainActivity.this,"Invoke onPreExecute()", Toast.LENGTH_SHORT).show();
 
             progress_status = 0;
             tvProgress.setText("Downloading 0%");
@@ -231,8 +230,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         {
             super.onPostExecute(result);
 
-            Toast.makeText(MainActivity.this,
-                    "Invoke onPostExecute()", Toast.LENGTH_SHORT).show();
 
             tvProgress.setText("Download complete");
             startButton.setEnabled(true);
