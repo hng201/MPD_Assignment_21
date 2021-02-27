@@ -12,8 +12,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.me.gcu.equakestartercode.R;
+import org.me.gcu.equakestartercode.adapters.CustomAdapter;
 import org.me.gcu.equakestartercode.models.Earthquake;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -42,6 +46,9 @@ public class HomeFragment extends Fragment implements OnClickListener
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     private ProgressBar pbData;
     private TextView tvProgress;
+    private RecyclerView rvData;
+    private  RecyclerView.Adapter rvAdapter;
+    private  ArrayList<Earthquake> recentList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +63,18 @@ public class HomeFragment extends Fragment implements OnClickListener
         // More Code goes here
         pbData = view.findViewById(R.id.pbData);
         tvProgress = view.findViewById(R.id.tvProgress);
+
+        rvData = view.findViewById(R.id.rvData);
+        rvData.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        rvData.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvData.getContext(),
+                DividerItemDecoration.VERTICAL);
+        rvData.addItemDecoration(dividerItemDecoration);
+
+        rvAdapter = new CustomAdapter(recentList);
+        rvData.setAdapter(rvAdapter);
         return view;
     }
 
@@ -71,6 +90,15 @@ public class HomeFragment extends Fragment implements OnClickListener
         // Run network access on a separate thread;
         new DownLoadDataTask().execute(urlSource);
     } //
+
+    /**
+     * Updates dataset used in recycler view
+     * @param earthquakeList array list of earthquakes
+     */
+    public void updateData(ArrayList<Earthquake> earthquakeList){
+        recentList.addAll(earthquakeList);
+        rvAdapter.notifyDataSetChanged();
+    }
 
     private class DownLoadDataTask extends AsyncTask<String, Integer, ArrayList<Earthquake>>
     {
@@ -233,8 +261,10 @@ public class HomeFragment extends Fragment implements OnClickListener
 
             tvProgress.setText("Download complete");
             startButton.setEnabled(true);
+            startButton.setText("Update Data");
+            updateData(earthquakeList);
            // pbData.setVisibility(View.INVISIBLE);
-            rawDataDisplay.setText(result.toString());
+            //rawDataDisplay.setText(result.toString());
         }
     }
 
