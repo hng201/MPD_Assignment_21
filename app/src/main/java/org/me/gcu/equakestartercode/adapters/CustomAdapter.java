@@ -1,5 +1,6 @@
 package org.me.gcu.equakestartercode.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,11 @@ import org.me.gcu.equakestartercode.models.Earthquake;
 import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+    private Context context;
     private ArrayList<Earthquake> earthquakeList;
 
-    public CustomAdapter(ArrayList<Earthquake> earthquakeList){
+    public CustomAdapter(Context context, ArrayList<Earthquake> earthquakeList){
+        this.context = context;
         this.earthquakeList = earthquakeList;
     }
 
@@ -53,10 +56,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * @param holder
      * @param position
      */
+
     @Override
     public void onBindViewHolder(@NonNull CustomAdapter.ViewHolder holder, int position) {
         holder.tvLocation.setText(earthquakeList.get(position).getLocation());
         holder.tvMagnitude.setText(String.valueOf(earthquakeList.get(position).getMagnitude()));
+        if (earthquakeList.get(position).getMagnitude() <= 5){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.yellow));
+        }
+        else if (earthquakeList.get(position).getMagnitude() <=8){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.orange));
+        }
+        else{
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.red));
+        }
     }
 
     /**
