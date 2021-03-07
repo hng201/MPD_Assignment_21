@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.me.gcu.equakestartercode.R;
 import org.me.gcu.equakestartercode.fragments.HomeFragment;
+import org.me.gcu.equakestartercode.fragments.MapFragment;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bnView;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.map:
                     toolbar.setTitle("Map View");
+                    loadFragment(new MapFragment());
                     return true;
             }
             return false;
