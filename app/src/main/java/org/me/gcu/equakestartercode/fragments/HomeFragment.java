@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                 DividerItemDecoration.VERTICAL);
         rvData.addItemDecoration(dividerItemDecoration);
 
-        rvAdapter = new CustomAdapter(recentList);
+        rvAdapter = new CustomAdapter(getActivity(),recentList);
         rvData.setAdapter(rvAdapter);
         return view;
     }
