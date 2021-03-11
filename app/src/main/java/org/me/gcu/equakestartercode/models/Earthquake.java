@@ -1,8 +1,9 @@
 package org.me.gcu.equakestartercode.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Earthquake {
+public class Earthquake implements Serializable {
     private String location;
     private Integer depth;
     private Double magnitude;
