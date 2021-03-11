@@ -18,6 +18,8 @@ import org.me.gcu.equakestartercode.fragments.MapFragment;
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bnView;
     private ActionBar toolbar;
+    private HomeFragment homeFragment;
+    private MapFragment mapFragment;
 
     /**
      * Sets the content to be displayed to activity_main
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
+
         bnView = findViewById(R.id.bnView);
         bnView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         // Set the active menu item in the BottomNavigationView
@@ -36,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = getSupportActionBar();
         toolbar.setTitle("Home");
-        Fragment fragment = new HomeFragment();
+
+        homeFragment = new HomeFragment();
+        mapFragment = new MapFragment();
+        Fragment fragment = homeFragment;
         loadFragment(fragment);
     }
 
@@ -67,14 +73,14 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     toolbar.setTitle("Home");
-                    loadFragment(new HomeFragment());
+                    loadFragment(homeFragment);
                     return true;
                 case R.id.search:
                     toolbar.setTitle("Search");
                     return true;
                 case R.id.map:
                     toolbar.setTitle("Map View");
-                    loadFragment(new MapFragment());
+                    loadFragment(mapFragment);
                     return true;
             }
             return false;
