@@ -20,6 +20,9 @@ import org.me.gcu.equakestartercode.models.Earthquake;
 
 import java.util.ArrayList;
 
+/**
+ * Shirley Ng S1626790
+ */
 public class MapFragment extends Fragment implements OnMapReadyCallback{
     private GoogleMap gmap;
     private ArrayList<Earthquake> earthquakeList = new ArrayList<>();;
