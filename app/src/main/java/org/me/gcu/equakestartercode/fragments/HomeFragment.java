@@ -37,6 +37,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Shirley Ng S1626790
+ */
 public class HomeFragment extends Fragment implements OnClickListener
 {
     private Button startButton;
