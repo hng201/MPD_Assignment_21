@@ -15,6 +15,9 @@ import org.me.gcu.equakestartercode.R;
 import org.me.gcu.equakestartercode.fragments.HomeFragment;
 import org.me.gcu.equakestartercode.fragments.MapFragment;
 
+/**
+ * Shirley Ng S1626790
+ */
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bnView;
     private ActionBar toolbar;
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         bnView.getMenu().getItem(0).setChecked(true);
 
         toolbar = getSupportActionBar();
-        toolbar.setTitle("Home");
+        toolbar.setTitle("Home - Shirley Ng S1626790");
 
         homeFragment = new HomeFragment();
         mapFragment = new MapFragment();
@@ -72,14 +75,14 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.home:
-                    toolbar.setTitle("Home");
+                    toolbar.setTitle("Home - Shirley Ng S1626790");
                     loadFragment(homeFragment);
                     return true;
                 case R.id.search:
-                    toolbar.setTitle("Search");
+                    toolbar.setTitle("Search - Shirley Ng S1626790");
                     return true;
                 case R.id.map:
-                    toolbar.setTitle("Map View");
+                    toolbar.setTitle("Map View - Shirley Ng S1626790");
                     loadFragment(mapFragment);
                     return true;
             }
