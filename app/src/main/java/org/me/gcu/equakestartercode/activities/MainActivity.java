@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.me.gcu.equakestartercode.R;
 import org.me.gcu.equakestartercode.fragments.HomeFragment;
 import org.me.gcu.equakestartercode.fragments.MapFragment;
+import org.me.gcu.equakestartercode.fragments.SearchFragment;
 
 /**
  * Shirley Ng S1626790
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar toolbar;
     private HomeFragment homeFragment;
     private MapFragment mapFragment;
+    private SearchFragment searchFragment;
 
     /**
      * Sets the content to be displayed to activity_main
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         homeFragment = new HomeFragment();
         mapFragment = new MapFragment();
+        searchFragment = new SearchFragment();
         Fragment fragment = homeFragment;
         loadFragment(fragment);
     }
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.search:
                     toolbar.setTitle("Search - Shirley Ng S1626790");
+                    loadFragment(searchFragment);
                     return true;
                 case R.id.map:
                     toolbar.setTitle("Map View - Shirley Ng S1626790");
