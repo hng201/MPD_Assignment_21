@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shirley Ng S1626790 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+    <TextView
+        android:id="@+id/tvStudentNameID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shirley Ng - S1626790"/>
+    <TextView
+        android:id="@+id/tvSearchByDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search By Date"
+        android:textSize="20sp"
+        android:layout_marginTop="100px"/>
+
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Select Date"
+        android:layout_marginTop="20px"/>
+    <Button
+        android:id="@+id/btnSearchByDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:layout_marginTop="20px"/>
+    <TextView
+        android:id="@+id/tvSearchByDateRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search By Date Range"
+        android:textSize="20sp"
+        android:layout_marginTop="100px"/>
+    <EditText
+        android:id="@+id/etStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Select Date"
+        android:layout_marginTop="20px"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="to"
+        android:textSize="18sp"
+        android:layout_marginTop="20px"/>
+    <EditText
+        android:id="@+id/etEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Select Date"
+        android:layout_marginTop="20px"/>
+    <Button
+        android:id="@+id/btnSearchByDateRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:layout_marginTop="20px"/>
+</LinearLayout>
