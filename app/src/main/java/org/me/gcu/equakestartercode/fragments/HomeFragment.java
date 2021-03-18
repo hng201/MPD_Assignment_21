@@ -37,6 +37,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Shirley Ng S1626790
+ */
 public class HomeFragment extends Fragment implements OnClickListener
 {
     private Button startButton;
@@ -45,8 +48,8 @@ public class HomeFragment extends Fragment implements OnClickListener
     private ProgressBar pbData;
     private TextView tvProgress;
     private RecyclerView rvData;
-    private  RecyclerView.Adapter rvAdapter;
-    private  ArrayList<Earthquake> recentList = new ArrayList<>();
+    private RecyclerView.Adapter rvAdapter;
+    private ArrayList<Earthquake> recentList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -229,8 +232,6 @@ public class HomeFragment extends Fragment implements OnClickListener
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-
             return earthquakeList;
         }
 
@@ -254,12 +255,16 @@ public class HomeFragment extends Fragment implements OnClickListener
         protected void onPostExecute(ArrayList<Earthquake> result)
         {
             super.onPostExecute(result);
-
-
+            // Create new Bundle to store earthquakeList
+            Bundle bundle = new Bundle();
+            // Add the earthquakeList to the bundle with the key 'earthquakes'
+            bundle.putSerializable("earthquakes", result);
+            // Set FragmentResult with the request key 'elist' and the bundle
+            getParentFragmentManager().setFragmentResult("elist", bundle);
             tvProgress.setText("Download complete");
             startButton.setEnabled(true);
             startButton.setText("Update Data");
-            updateData(earthquakeList);
+            updateData(result);
            // pbData.setVisibility(View.INVISIBLE);
         }
     }
