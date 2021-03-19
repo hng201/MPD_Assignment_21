@@ -22,7 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Select Date"
-        android:layout_marginTop="20px"/>
+        android:layout_marginTop="20px"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
     <Button
         android:id="@+id/btnSearchByDate"
         android:layout_width="wrap_content"
@@ -41,7 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Select Date"
-        android:layout_marginTop="20px"/>
+        android:layout_marginTop="20px"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +57,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Select Date"
-        android:layout_marginTop="20px"/>
+        android:layout_marginTop="20px"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
     <Button
         android:id="@+id/btnSearchByDateRange"
         android:layout_width="wrap_content"
