@@ -1,15 +1,12 @@
 package org.me.gcu.equakestartercode.activities;
 
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.me.gcu.equakestartercode.R;
 import org.me.gcu.equakestartercode.fragments.HomeFragment;
@@ -19,9 +16,8 @@ import org.me.gcu.equakestartercode.fragments.SearchFragment;
 /**
  * Shirley Ng S1626790
  */
-public class MainActivity extends AppCompatActivity {
-    private BottomNavigationView bnView;
-    private ActionBar toolbar;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private SwitchCompat switchMapView;
     private HomeFragment homeFragment;
     private MapFragment mapFragment;
     private SearchFragment searchFragment;
@@ -37,14 +33,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
 
-        bnView = findViewById(R.id.bnView);
-        bnView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        // Set the active menu item in the BottomNavigationView
-        bnView.getMenu().getItem(0).setChecked(true);
+        switchMapView = findViewById(R.id.switchMapView);
 
-        toolbar = getSupportActionBar();
-        toolbar.setTitle("Home - Shirley Ng S1626790");
-
+        switchMapView.setChecked(false);
+        switchMapView.setOnClickListener(this);
         homeFragment = new HomeFragment();
         mapFragment = new MapFragment();
         searchFragment = new SearchFragment();
@@ -64,33 +56,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Used to identify which menu item has been selected.
-         * For the selected menu item, load the corresponding fragment and
-         * set an appropriate Title on the toolbar for screen
-         * @param item
-         * @return true indicates a particular menu item has been selected
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    toolbar.setTitle("Home - Shirley Ng S1626790");
-                    loadFragment(homeFragment);
-                    return true;
-                case R.id.search:
-                    toolbar.setTitle("Search - Shirley Ng S1626790");
-                    loadFragment(searchFragment);
-                    return true;
-                case R.id.map:
-                    toolbar.setTitle("Map View - Shirley Ng S1626790");
-                    loadFragment(mapFragment);
-                    return true;
-            }
-            return false;
+    @Override
+    public void onClick(View v) {
+        if (switchMapView.isChecked()){
+            loadFragment(mapFragment);
         }
-    };
+        else {
+            loadFragment(homeFragment);
+
+        }
+    }
 }
