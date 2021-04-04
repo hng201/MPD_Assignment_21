@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +44,7 @@ import java.util.regex.Pattern;
 public class HomeFragment extends Fragment implements OnClickListener
 {
     private Button startButton;
+    private Button btnEarthquake;
     private String result;
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     private ProgressBar pbData;
@@ -61,6 +63,9 @@ public class HomeFragment extends Fragment implements OnClickListener
         startButton.setOnClickListener(this);
         Log.e("MyTag","after startButton");
         // More Code goes here
+        btnEarthquake = view.findViewById(R.id.btnEarthquake);
+        btnEarthquake.setOnClickListener(this);
+
         pbData = view.findViewById(R.id.pbData);
         tvProgress = view.findViewById(R.id.tvProgress);
 
@@ -78,11 +83,18 @@ public class HomeFragment extends Fragment implements OnClickListener
         return view;
     }
 
-    public void onClick(View aview)
-    {
-        Log.e("MyTag","in onClick");
-        startProgress();
-        Log.e("MyTag","after startProgress");
+    public void onClick(View aview) {
+        if (aview == btnEarthquake) {
+            SearchFragment searchFragment = new SearchFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            // Replace current fragment with new fragment 
+            transaction.replace(R.id.frameLayout, searchFragment);
+            transaction.commit();
+        } else {
+            Log.e("MyTag", "in onClick");
+            startProgress();
+            Log.e("MyTag", "after startProgress");
+        }
     }
 
     public void startProgress()
