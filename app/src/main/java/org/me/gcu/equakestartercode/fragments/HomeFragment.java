@@ -16,9 +16,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import org.me.gcu.equakestartercode.R;
 import org.me.gcu.equakestartercode.adapters.CustomAdapter;
+import org.me.gcu.equakestartercode.database.AppDatabase;
 import org.me.gcu.equakestartercode.models.Earthquake;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -100,7 +102,7 @@ public class HomeFragment extends Fragment implements OnClickListener
     public void startProgress()
     {
         // Run network access on a separate thread;
-        new DownLoadDataTask().execute(urlSource);
+        new DownloadDataTask().execute(urlSource);
     } //
 
     /**
@@ -112,7 +114,7 @@ public class HomeFragment extends Fragment implements OnClickListener
         rvAdapter.notifyDataSetChanged();
     }
 
-    private class DownLoadDataTask extends AsyncTask<String, Integer, ArrayList<Earthquake>>
+    private class DownloadDataTask extends AsyncTask<String, Integer, ArrayList<Earthquake>>
     {
 
         int progress_status;
@@ -161,6 +163,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                 }
                 earthquakeList = null;
                 Earthquake earthquake = null;
+                AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "db-earthquake").build();
                 result = result.substring(4);
                 result = result.substring(0, result.length() - 6);
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -209,7 +212,9 @@ public class HomeFragment extends Fragment implements OnClickListener
                                 String temp = xpp.nextText();
                                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.ENGLISH);
                                 Date pubDate = sdf.parse(temp);
-                                earthquake.setPubDate(pubDate);
+                                SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+                                String strDate = sdf2.format(pubDate);
+                                earthquake.setPubDate(strDate);
                                 Log.e("pubDate is", earthquake.getPubDate().toString());
                             } else if (xpp.getName().equalsIgnoreCase("category")) {
                                 String category = xpp.nextText();
@@ -224,6 +229,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                                 earthquake.setGeoLong(geoLong);
                                 Log.e("Geo:long is", String.valueOf(earthquake.getGeoLong()));
                                 earthquakeList.add(earthquake);
+                                db.earthquakeDao().insert(earthquake);
                                 Log.e("Added", earthquake.toString());
                                 progress_status += Math.ceil((100/totalItems));
                                 publishProgress(progress_status);
@@ -267,12 +273,7 @@ public class HomeFragment extends Fragment implements OnClickListener
         protected void onPostExecute(ArrayList<Earthquake> result)
         {
             super.onPostExecute(result);
-            // Create new Bundle to store earthquakeList
-            Bundle bundle = new Bundle();
-            // Add the earthquakeList to the bundle with the key 'earthquakes'
-            bundle.putSerializable("earthquakes", result);
-            // Set FragmentResult with the request key 'elist' and the bundle
-            getParentFragmentManager().setFragmentResult("elist", bundle);
+
             tvProgress.setText("Download complete");
             startButton.setEnabled(true);
             startButton.setText("Update Data");
