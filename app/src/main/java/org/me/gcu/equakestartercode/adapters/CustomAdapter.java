@@ -87,9 +87,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.red));
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.ENGLISH);
-        String pubDate = sdf.format(earthquakeList.get(position).getPubDate());
-        holder.tvDate.setText("Publication Date \n" + pubDate);
+        holder.tvDate.setText("Publication Date \n" + earthquakeList.get(position).getPubDate());
         holder.tvDate.setVisibility(View.GONE);
 
         holder.tvGeoLat.setText("Geo Latitude \n" + String.valueOf(earthquakeList.get(position).getGeoLat()));
