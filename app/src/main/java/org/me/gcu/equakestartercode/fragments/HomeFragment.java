@@ -164,6 +164,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                 earthquakeList = null;
                 Earthquake earthquake = null;
                 AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "db-earthquake").build();
+                db.clearAllTables();
                 result = result.substring(4);
                 result = result.substring(0, result.length() - 6);
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -284,7 +285,7 @@ public class HomeFragment extends Fragment implements OnClickListener
         protected void onPostExecute(ArrayList<Earthquake> result)
         {
             super.onPostExecute(result);
-
+            pbData.setVisibility(View.INVISIBLE);
             tvProgress.setText("Download complete");
             startButton.setEnabled(true);
             startButton.setText("Update Data");
