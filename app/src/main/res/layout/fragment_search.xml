@@ -109,7 +109,12 @@
                 android:layout_height="wrap_content"
                 android:text="Search"
                 android:layout_marginTop="20px"/>
-
         </LinearLayout>
     </ViewSwitcher>
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
 </LinearLayout>
