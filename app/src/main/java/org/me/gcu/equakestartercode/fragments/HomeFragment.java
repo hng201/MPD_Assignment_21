@@ -197,13 +197,24 @@ public class HomeFragment extends Fragment implements OnClickListener
                             } else if (xpp.getName().equalsIgnoreCase("description")) {
                                 String description = xpp.nextText();
                                 String[] temp = description.split(";");
-                                earthquake.setLocation(temp[1].split(" ")[2]);
-                                earthquake.setDepth(Integer.parseInt(temp[3].replaceAll("[^0-9\\.]+", "")));
-                                earthquake.setMagnitude(Double.parseDouble(temp[4].replaceAll("[^0-9\\.]+", "")));
-                                Log.e("Description is", description);
-                                Log.e("Location is", earthquake.getLocation());
-                                Log.e("Depth is", String.valueOf(earthquake.getDepth()));
-                                Log.e("Magnitude is", String.valueOf(earthquake.getMagnitude()));
+                                try{
+                                    String location = "";
+                                    for (int y = 0; y < temp[1].split(" ").length; y++){
+                                        location += temp[1].split(" ")[y] + " ";
+                                    }
+                                    earthquake.setLocation(location);
+                                    earthquake.setDepth(Integer.parseInt(temp[3].replaceAll("[^0-9\\.]+", "")));
+                                    earthquake.setMagnitude(Double.parseDouble(temp[4].replaceAll("[^0-9\\.]+", "")));
+                                    Log.e("Description is", description);
+                                    Log.e("Location is", earthquake.getLocation());
+                                    Log.e("Depth is", String.valueOf(earthquake.getDepth()));
+                                    Log.e("Magnitude is", String.valueOf(earthquake.getMagnitude()));
+
+                                }
+                                catch(Exception e){
+                                    Log.e("Exception", e.toString());
+                                    continue;
+                                }
                             } else if (xpp.getName().equalsIgnoreCase("link")) {
                                 String link = xpp.nextText();
                                 earthquake.setLink(link);
