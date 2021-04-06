@@ -23,12 +23,20 @@
   */
 public class SearchResultFragment extends Fragment {
     private TextView tvSearchCriteria;
+    private TextView tvNorth;
+    private TextView tvSouth;
+    private TextView tvEast;
+    private TextView tvWest;
     private TextView tvLargeMag;
     private TextView tvEarthquakeNo;
     private TextView tvShallowest;
     private TextView tvDeepest;
     private ArrayList<Earthquake> filteredList = new ArrayList<>();
     private ArrayList<String> dates = new ArrayList<>();
+    private Earthquake northEq;
+    private Earthquake southEq;
+    private Earthquake eastEq;
+    private Earthquake westEq;
     private Earthquake largestMagEq;
     private Earthquake shallowestEq;
     private Earthquake deepestEq;
@@ -44,6 +52,10 @@ public class SearchResultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_results, container, false);
 
         tvSearchCriteria = view.findViewById(R.id.tvSearchCriteria);
+        tvNorth = view.findViewById(R.id.tvNorth);
+        tvSouth = view.findViewById(R.id.tvSouth);
+        tvEast = view.findViewById(R.id.tvEast);
+        tvWest = view.findViewById(R.id.tvWest);
         tvLargeMag = view.findViewById(R.id.tvLargeMag);
         tvEarthquakeNo = view.findViewById(R.id.tvEarthquakeNo);
         tvShallowest = view.findViewById(R.id.tvShallowest);
@@ -60,6 +72,10 @@ public class SearchResultFragment extends Fragment {
             Context context = getContext();
             AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "db-earthquake").build();
             Log.e("Param", params[0]);
+            northEq = db.earthquakeDao().getNorthEarthquake(params[0]);
+            southEq = db.earthquakeDao().getSouthEarthquake(params[0]);
+            eastEq = db.earthquakeDao().getEastEarthquake(params[0]);
+            westEq = db.earthquakeDao().getWestEarthquake(params[0]);
             largestMagEq = db.earthquakeDao().getLargestMagnitudeEarthquake(params[0]);
             shallowestEq = db.earthquakeDao().getShallowestEarthquake(params[0]);
             deepestEq = db.earthquakeDao().getDeepestEarthquake(params[0]);
@@ -85,11 +101,19 @@ public class SearchResultFragment extends Fragment {
     }
 
     private void getEarthquakeSummary(ArrayList<Earthquake> earthquakeList) {
+        String north = northEq.getLocation() + "\n" + northEq.getGeoLat() + "," + northEq.getGeoLong();
+        tvNorth.setText(north);
+        String south = southEq.getLocation() + "\n" + southEq.getGeoLat() + "," + southEq.getGeoLong();
+        tvSouth.setText(south);
+        String east = eastEq.getLocation() + "\n" + eastEq.getGeoLat() + "," + eastEq.getGeoLong();
+        tvEast.setText(east);
+        String west = westEq.getLocation() + "\n" + westEq.getGeoLat() + "," + westEq.getGeoLong();
+        tvWest.setText(west);
         String largestMagnitude = largestMagEq.getLocation() + " M" + largestMagEq.getMagnitude();
         tvLargeMag.setText(largestMagnitude);
-        String shallowest = shallowestEq.getLocation() + " Depth: " + shallowestEq.getDepth();
+        String shallowest = shallowestEq.getLocation() + "\nDepth: " + shallowestEq.getDepth();
         tvShallowest.setText(shallowest);
-        String deepest = deepestEq.getLocation() + " Depth: " + deepestEq.getDepth();
+        String deepest = deepestEq.getLocation() + "\nDepth: " + deepestEq.getDepth();
         tvDeepest.setText(deepest);
     }
 
