@@ -16,4 +16,7 @@ public interface EarthquakeDao {
 
     @Query("SELECT * FROM earthquake")
     List<Earthquake> getEarthquakes();
+
+    @Query("SELECT * FROM earthquake WHERE published_date = :date")
+    List<Earthquake> getEarthquakesByDate(String date);
 }
