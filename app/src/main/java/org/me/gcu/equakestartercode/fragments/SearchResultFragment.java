@@ -23,6 +23,7 @@ public class SearchResultFragment extends Fragment {
     private TextView tvNull;
     private ArrayList<Earthquake> filteredList = new ArrayList<>();
     private ArrayList<String> dates = new ArrayList<>();
+    private Earthquake largestMag;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class SearchResultFragment extends Fragment {
             Context context = getContext();
             AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "db-earthquake").build();
             Log.e("Param", params[0]);
+            largestMag = db.earthquakeDao().getLargestMagnitudeEarthquake();
             return (ArrayList<Earthquake>) db.earthquakeDao().getEarthquakesByDate(params[0]);
         }
 
@@ -69,26 +71,7 @@ public class SearchResultFragment extends Fragment {
     }
 
     private void getEarthquakeSummary(ArrayList<Earthquake> earthquakeList) {
-        Earthquake earthquake = new Earthquake();
-        if (earthquakeList.size() < 2){
-            earthquake = earthquakeList.get(0);
-        }
-        else {
-            for (int i = 0; i < filteredList.size(); i++) {
-                if (earthquake == null) {
-                    earthquake = filteredList.get(i);
-                    Log.e("Current LargeMag", earthquake.getMagnitude() + ", " + earthquake.getLocation() + ", " + earthquake.getPubDate());
-                } else {
-                    Log.e("Compare Value", earthquake.getMagnitude() + ", " + earthquake.getLocation() + ", " + earthquake.getPubDate());
-                    if (earthquake.getMagnitude() < filteredList.get(i).getMagnitude()) {
-                        earthquake = earthquakeList.get(i);
-                        Log.e("Current LargeMag", earthquake.getMagnitude() + ", " + earthquake.getLocation() + ", " + earthquake.getPubDate());
-                    }
-                }
-            }
-        }
-
-        String largestMagnitude = earthquake.getLocation() + " M" + earthquake.getMagnitude();
+        String largestMagnitude = largestMag.getLocation() + " M" + largestMag.getMagnitude();
         tvLargeMag.setText(largestMagnitude);
     }
 
