@@ -200,7 +200,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                                 String[] temp = description.split(";");
                                 try{
                                     String location = "";
-                                    for (int y = 0; y < temp[1].split(" ").length; y++){
+                                    for (int y = 2; y < temp[1].split(" ").length; y++){
                                         location += temp[1].split(" ")[y] + " ";
                                     }
                                     earthquake.setLocation(location);
