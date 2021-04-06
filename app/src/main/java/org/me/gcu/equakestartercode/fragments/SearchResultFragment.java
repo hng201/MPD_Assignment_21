@@ -18,6 +18,9 @@
 
  import java.util.ArrayList;
 
+ /**
+  * Shirley Ng S1626790
+  */
 public class SearchResultFragment extends Fragment {
     private TextView tvLargeMag;
     private TextView tvNull;

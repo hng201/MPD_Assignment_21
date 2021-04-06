@@ -9,6 +9,9 @@ import org.me.gcu.equakestartercode.models.Earthquake;
 
 import java.util.List;
 
+/**
+ * Shirley Ng S1626790
+ */
 @Dao
 public interface EarthquakeDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
