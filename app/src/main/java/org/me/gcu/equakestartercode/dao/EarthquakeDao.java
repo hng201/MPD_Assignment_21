@@ -23,6 +23,12 @@ public interface EarthquakeDao {
     @Query("SELECT * FROM earthquake WHERE published_date = :date")
     List<Earthquake> getEarthquakesByDate(String date);
 
-    @Query("SELECT * FROM earthquake ORDER BY magnitude DESC LIMIT 1")
-    Earthquake getLargestMagnitudeEarthquake();
+    @Query("SELECT * FROM earthquake WHERE published_date = :date ORDER BY magnitude DESC LIMIT 1")
+    Earthquake getLargestMagnitudeEarthquake(String date);
+
+    @Query("SELECT * FROM earthquake WHERE published_date = :date ORDER BY depth ASC LIMIT 1")
+    Earthquake getShallowestEarthquake(String date);
+
+    @Query("SELECT * FROM earthquake WHERE published_date = :date ORDER BY depth DESC LIMIT 1")
+    Earthquake getDeepestEarthquake(String date);
 }
