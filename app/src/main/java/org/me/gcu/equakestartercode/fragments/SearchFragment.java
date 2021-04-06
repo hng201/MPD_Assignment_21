@@ -12,10 +12,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.me.gcu.equakestartercode.R;
 
@@ -38,10 +40,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private RadioButton rbtnDateRange;
     private DatePickerDialog dpd;
     private Calendar cal;
-    private ArrayList<String> dates = new ArrayList<>();
     private ViewSwitcher viewSwitcher;
     private boolean byDate;
     private RadioGroup radioGroup;
+    private TextView tvError;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -55,6 +57,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         btnSearchByDateRange = view.findViewById(R.id.btnSearchByDateRange);
         rbtnDate = view.findViewById(R.id.rbtnDate);
         rbtnDateRange = view.findViewById(R.id.rbtnDateRange);
+        tvError = view.findViewById(R.id.tvError);
 
         etDate.setOnClickListener(this);
         etStartDate.setOnClickListener(this);
@@ -103,7 +106,32 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
-        if (rbtnDate.isChecked()){
+        if (v == etDate){
+            setDate(etDate);
+
+        }
+        else if (v == etStartDate){
+            setDate(etStartDate);
+        }
+        else if (v == etEndDate) {
+            setDate(etEndDate);
+        }
+        else if (v == btnSearchByDate){
+            if (etDate.getText() != null){
+                SearchResultFragment searchResultFragment = new SearchResultFragment();
+                ArrayList<String> dates = new ArrayList<>();
+                dates.add(etDate.getText().toString());
+                searchResultFragment.setDates(dates);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                // Replace current fragment with new fragment
+                transaction.replace(R.id.frameLayout, searchResultFragment);
+                transaction.commit();
+            }
+            else {
+                tvError.setText("Error: No Date Selected for Search");
+            }
+        }
+        else if (rbtnDate.isChecked()){
             if (!byDate){
                 viewSwitcher.showNext();
                 byDate = true;
