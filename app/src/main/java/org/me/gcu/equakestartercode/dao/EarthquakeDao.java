@@ -31,4 +31,16 @@ public interface EarthquakeDao {
 
     @Query("SELECT * FROM earthquake WHERE published_date = :date ORDER BY depth DESC LIMIT 1")
     Earthquake getDeepestEarthquake(String date);
+
+    @Query("SELECT * FROM earthquake WHERE published_date = :date ORDER BY geo_latitude DESC LIMIT 1")
+    Earthquake getNorthEarthquake(String date);
+
+    @Query("SELECT * FROM earthquake WHERE published_date = :date ORDER BY geo_latitude ASC LIMIT 1")
+    Earthquake getSouthEarthquake(String date);
+
+    @Query("SELECT * FROM earthquake WHERE published_date = :date ORDER BY geo_longitude DESC LIMIT 1")
+    Earthquake getEastEarthquake(String date);
+
+    @Query("SELECT * FROM earthquake WHERE published_date = :date ORDER BY geo_longitude ASC LIMIT 1")
+    Earthquake getWestEarthquake(String date);
 }
