@@ -19,4 +19,7 @@ public interface EarthquakeDao {
 
     @Query("SELECT * FROM earthquake WHERE published_date = :date")
     List<Earthquake> getEarthquakesByDate(String date);
+
+    @Query("SELECT * FROM earthquake ORDER BY magnitude DESC LIMIT 1")
+    Earthquake getLargestMagnitudeEarthquake();
 }
