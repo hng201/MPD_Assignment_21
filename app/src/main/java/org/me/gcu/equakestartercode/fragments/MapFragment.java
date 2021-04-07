@@ -1,5 +1,6 @@
 package org.me.gcu.equakestartercode.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.room.Room;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.me.gcu.equakestartercode.R;
+import org.me.gcu.equakestartercode.database.AppDatabase;
 import org.me.gcu.equakestartercode.models.Earthquake;
 
 import java.util.ArrayList;
@@ -28,6 +31,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private ArrayList<Earthquake> earthquakeList = new ArrayList<>();;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new GetEarthquakesTask().execute();
+    }
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -37,23 +45,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         return view;
     }
 
-    /**
-     * Sets a FragmentResultListener which will trigger when a result
-     * with the result key 'elist' is set.
-     * The earthquakeList is obtained here from the HomeFragment.
-     * @param savedInstanceState
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getParentFragmentManager().setFragmentResultListener("elist", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(String requestKey, Bundle bundle) {
-                // Get the value of the key 'earthquakes from the bundle
-                earthquakeList = (ArrayList<Earthquake>) bundle.getSerializable("earthquakes");
-            }
-        });
+    private class GetEarthquakesTask extends AsyncTask<Void, Void, ArrayList<Earthquake>> {
+        @Override
+        protected ArrayList<Earthquake> doInBackground(Void... params) {
+            AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "db-earthquake").build();
+            return (ArrayList<Earthquake>) db.earthquakeDao().getEarthquakes();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Earthquake> result)
+        {
+            super.onPostExecute(result);
+            earthquakeList = result;
+        }
     }
+
 
     /**
      * Manipulates the map once available.

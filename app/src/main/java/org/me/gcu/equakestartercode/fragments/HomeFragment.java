@@ -12,12 +12,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import org.me.gcu.equakestartercode.R;
 import org.me.gcu.equakestartercode.adapters.CustomAdapter;
+import org.me.gcu.equakestartercode.database.AppDatabase;
 import org.me.gcu.equakestartercode.models.Earthquake;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -34,6 +37,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +48,7 @@ import java.util.regex.Pattern;
 public class HomeFragment extends Fragment implements OnClickListener
 {
     private Button startButton;
+    private Button btnEarthquake;
     private String result;
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     private ProgressBar pbData;
@@ -50,6 +56,8 @@ public class HomeFragment extends Fragment implements OnClickListener
     private RecyclerView rvData;
     private RecyclerView.Adapter rvAdapter;
     private ArrayList<Earthquake> recentList = new ArrayList<>();
+    private Boolean updating;
+    private  AppDatabase db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +69,9 @@ public class HomeFragment extends Fragment implements OnClickListener
         startButton.setOnClickListener(this);
         Log.e("MyTag","after startButton");
         // More Code goes here
+        btnEarthquake = view.findViewById(R.id.btnEarthquake);
+        btnEarthquake.setOnClickListener(this);
+
         pbData = view.findViewById(R.id.pbData);
         tvProgress = view.findViewById(R.id.tvProgress);
 
@@ -75,20 +86,35 @@ public class HomeFragment extends Fragment implements OnClickListener
 
         rvAdapter = new CustomAdapter(getActivity(),recentList);
         rvData.setAdapter(rvAdapter);
+
+        db = Room.databaseBuilder(getContext(), AppDatabase.class, "db-earthquake").build();
+        updating = false;
+
+        Timer timer = new Timer();
+
+        DownloadDataTask downloadDataTask = new DownloadDataTask();
+        timer.schedule(downloadDataTask, 10000, 10000);
         return view;
     }
 
-    public void onClick(View aview)
-    {
-        Log.e("MyTag","in onClick");
-        startProgress();
-        Log.e("MyTag","after startProgress");
+    public void onClick(View aview) {
+        if (aview == btnEarthquake) {
+            SearchFragment searchFragment = new SearchFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            // Replace current fragment with new fragment 
+            transaction.replace(R.id.frameLayout, searchFragment);
+            transaction.commit();
+        } else {
+            Log.e("MyTag", "in onClick");
+            startProgress();
+            Log.e("MyTag", "after startProgress");
+        }
     }
 
     public void startProgress()
     {
         // Run network access on a separate thread;
-        new DownLoadDataTask().execute(urlSource);
+        new DownloadDataTask().run();
     } //
 
     /**
@@ -100,25 +126,28 @@ public class HomeFragment extends Fragment implements OnClickListener
         rvAdapter.notifyDataSetChanged();
     }
 
-    private class DownLoadDataTask extends AsyncTask<String, Integer, ArrayList<Earthquake>>
-    {
-
-        int progress_status;
-        ArrayList<Earthquake> earthquakeList;
-
-        @Override
-        protected void onPreExecute()
+    private class DownloadDataTask extends TimerTask {
+        class myTask extends AsyncTask<String, Integer, ArrayList<Earthquake>>
         {
-            // update the UI immediately after the task is executed
-            super.onPreExecute();
+            int progress_status;
+            ArrayList<Earthquake> earthquakeList;
 
+            @Override
+            protected void onPreExecute ()
+            {
+                // update the UI immediately after the task is executed
+                super.onPreExecute();
+                progress_status = 0;
+                if (updating){
+                    tvProgress.setText("Updating 0%");
+                }
+                else{
+                    tvProgress.setText("Downloading 0%");
+                }
 
-            progress_status = 0;
-            tvProgress.setText("Downloading 0%");
-
-        }
-        @Override
-        protected ArrayList<Earthquake> doInBackground(String... params) {
+            }
+            @Override
+            protected ArrayList<Earthquake> doInBackground (String...params){
             URL aurl;
             URLConnection yc;
             BufferedReader in = null;
@@ -149,6 +178,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                 }
                 earthquakeList = null;
                 Earthquake earthquake = null;
+                db.clearAllTables();
                 result = result.substring(4);
                 result = result.substring(0, result.length() - 6);
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -182,13 +212,23 @@ public class HomeFragment extends Fragment implements OnClickListener
                             } else if (xpp.getName().equalsIgnoreCase("description")) {
                                 String description = xpp.nextText();
                                 String[] temp = description.split(";");
-                                earthquake.setLocation(temp[1].split(" ")[2]);
-                                earthquake.setDepth(Integer.parseInt(temp[3].replaceAll("[^0-9\\.]+", "")));
-                                earthquake.setMagnitude(Double.parseDouble(temp[4].replaceAll("[^0-9\\.]+", "")));
-                                Log.e("Description is", description);
-                                Log.e("Location is", earthquake.getLocation());
-                                Log.e("Depth is", String.valueOf(earthquake.getDepth()));
-                                Log.e("Magnitude is", String.valueOf(earthquake.getMagnitude()));
+                                try {
+                                    String location = "";
+                                    for (int y = 2; y < temp[1].split(" ").length; y++) {
+                                        location += temp[1].split(" ")[y] + " ";
+                                    }
+                                    earthquake.setLocation(location);
+                                    earthquake.setDepth(Integer.parseInt(temp[3].replaceAll("[^0-9\\.]+", "")));
+                                    earthquake.setMagnitude(Double.parseDouble(temp[4].replaceAll("[^0-9\\.]+", "")));
+                                    Log.e("Description is", description);
+                                    Log.e("Location is", earthquake.getLocation());
+                                    Log.e("Depth is", String.valueOf(earthquake.getDepth()));
+                                    Log.e("Magnitude is", String.valueOf(earthquake.getMagnitude()));
+
+                                } catch (Exception e) {
+                                    Log.e("Exception", e.toString());
+                                    continue;
+                                }
                             } else if (xpp.getName().equalsIgnoreCase("link")) {
                                 String link = xpp.nextText();
                                 earthquake.setLink(link);
@@ -197,7 +237,9 @@ public class HomeFragment extends Fragment implements OnClickListener
                                 String temp = xpp.nextText();
                                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.ENGLISH);
                                 Date pubDate = sdf.parse(temp);
-                                earthquake.setPubDate(pubDate);
+                                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                                String strDate = sdf2.format(pubDate);
+                                earthquake.setPubDate(strDate);
                                 Log.e("pubDate is", earthquake.getPubDate().toString());
                             } else if (xpp.getName().equalsIgnoreCase("category")) {
                                 String category = xpp.nextText();
@@ -212,8 +254,9 @@ public class HomeFragment extends Fragment implements OnClickListener
                                 earthquake.setGeoLong(geoLong);
                                 Log.e("Geo:long is", String.valueOf(earthquake.getGeoLong()));
                                 earthquakeList.add(earthquake);
+                                db.earthquakeDao().insert(earthquake);
                                 Log.e("Added", earthquake.toString());
-                                progress_status += Math.ceil((100/totalItems));
+                                progress_status += Math.ceil((100 / totalItems));
                                 publishProgress(progress_status);
                             }
                         }
@@ -235,37 +278,50 @@ public class HomeFragment extends Fragment implements OnClickListener
             return earthquakeList;
         }
 
-        @Override
-        protected void onProgressUpdate(Integer... values)
-        {
-            super.onProgressUpdate(values);
+            @Override
+            protected void onProgressUpdate (Integer...values)
+            {
+                super.onProgressUpdate(values);
 
-            pbData.setProgress(values[0]);
+                pbData.setProgress(values[0]);
 
-            if (values[0] >= 100){
-                tvProgress.setText("Downloading 100%");
+                if (updating){
+                    if (values[0] >= 100) {
+                        tvProgress.setText("Updating 100%");
+                    } else {
+                        tvProgress.setText("Updating " + values[0] + "%");
+                    }
+                }
+                else {
+                    if (values[0] >= 100) {
+                        tvProgress.setText("Downloading 100%");
+                    } else {
+                        tvProgress.setText("Downloading " + values[0] + "%");
+                    }
+                }
+
             }
-            else {
-                tvProgress.setText("Downloading " + values[0] + "%");
-            }
 
+            @Override
+            protected void onPostExecute (ArrayList < Earthquake > result)
+            {
+                super.onPostExecute(result);
+                if (updating){
+                    tvProgress.setText("Update complete");
+                }
+                else{
+                    tvProgress.setText("Download complete");
+                    updating = true;
+                }
+                startButton.setEnabled(true);
+                startButton.setText("Update Data");
+                updateData(result);
+                pbData.setVisibility(View.INVISIBLE);
+            }
         }
 
-        @Override
-        protected void onPostExecute(ArrayList<Earthquake> result)
-        {
-            super.onPostExecute(result);
-            // Create new Bundle to store earthquakeList
-            Bundle bundle = new Bundle();
-            // Add the earthquakeList to the bundle with the key 'earthquakes'
-            bundle.putSerializable("earthquakes", result);
-            // Set FragmentResult with the request key 'elist' and the bundle
-            getParentFragmentManager().setFragmentResult("elist", bundle);
-            tvProgress.setText("Download complete");
-            startButton.setEnabled(true);
-            startButton.setText("Update Data");
-            updateData(result);
-           // pbData.setVisibility(View.INVISIBLE);
+        public void run() {
+            new myTask().execute(urlSource);
         }
     }
 

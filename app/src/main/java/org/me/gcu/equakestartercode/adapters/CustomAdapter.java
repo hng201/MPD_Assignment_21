@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.me.gcu.equakestartercode.R;
 import org.me.gcu.equakestartercode.models.Earthquake;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -86,10 +88,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         else{
             holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.red));
         }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.ENGLISH);
-        String pubDate = sdf.format(earthquakeList.get(position).getPubDate());
-        holder.tvDate.setText("Publication Date \n" + pubDate);
+        
+        String formatPubDate = "";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            Date pubDate = sdf.parse(earthquakeList.get(position).getPubDate());
+            formatPubDate = sdf2.format(pubDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.tvDate.setText("Publication Date \n" + formatPubDate);
         holder.tvDate.setVisibility(View.GONE);
 
         holder.tvGeoLat.setText("Geo Latitude \n" + String.valueOf(earthquakeList.get(position).getGeoLat()));
