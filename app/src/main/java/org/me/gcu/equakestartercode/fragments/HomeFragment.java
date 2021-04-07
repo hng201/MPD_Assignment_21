@@ -290,7 +290,6 @@ public class HomeFragment extends Fragment implements OnClickListener
             startButton.setEnabled(true);
             startButton.setText("Update Data");
             updateData(result);
-           // pbData.setVisibility(View.INVISIBLE);
         }
     }
 
