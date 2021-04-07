@@ -1,0 +1,45 @@
+<!--  MPD XML Starter code Semester B Session 2018 2019  -->
+<!-- Shirley Ng S1626790 -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <TextView android:id="@+id/salutation" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="MPD Coursework by Shirley Ng S1626790"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <ProgressBar
+                android:id="@+id/pbData"
+                android:layout_width="250dp"
+                android:layout_height="10dp"
+                android:layout_margin="10dp"
+                style="@android:style/Widget.ProgressBar.Horizontal" />
+                <TextView
+                    android:id="@+id/tvProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEarthquake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/earthquake_search"
+                android:layout_marginRight="8dp"/>
+            <Button android:id="@+id/startButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/press_to_get_data"/>
+
+        </LinearLayout>
+        <TextView android:id="@+id/acknowledgement" android:layout_width="match_parent" android:layout_height="match_parent" android:textSize="20sp" android:text="@string/data_copyright"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</ScrollView>
