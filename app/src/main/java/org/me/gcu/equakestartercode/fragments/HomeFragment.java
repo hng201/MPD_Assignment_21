@@ -92,6 +92,7 @@ public class HomeFragment extends Fragment implements OnClickListener
         Timer timer = new Timer();
 
         DownloadDataTask downloadDataTask = new DownloadDataTask();
+        downloadDataTask.run();
         timer.schedule(downloadDataTask, 10000, 10000);
         return view;
     }
@@ -311,6 +312,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                     tvProgress.setText("Download complete");
                     updating = true;
                 }
+                updateData(result);
                 startButton.setEnabled(true);
                 startButton.setText("Update Data");
                 pbData.setVisibility(View.INVISIBLE);
