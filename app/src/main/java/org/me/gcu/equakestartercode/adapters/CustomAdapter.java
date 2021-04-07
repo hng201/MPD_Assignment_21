@@ -37,6 +37,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         private TextView tvLocation;
         private TextView tvMagnitude;
         private TextView tvDate;
+        private TextView tvDepth;
         private TextView tvGeoLat;
         private TextView tvGeoLong;
         private TextView tvLink;
@@ -47,6 +48,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             cardView = view.findViewById(R.id.cardView);
             tvLocation = view.findViewById(R.id.tvLocation);
             tvMagnitude = view.findViewById(R.id.tvMagnitude);
+            tvDepth = view.findViewById(R.id.tvDepth);
             tvDate =  view.findViewById(R.id.tvDate);
             tvGeoLat = view.findViewById(R.id.tvGeoLat);
             tvGeoLong = view.findViewById(R.id.tvGeoLong);
@@ -78,7 +80,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull CustomAdapter.ViewHolder holder, int position) {
         holder.tvLocation.setText(earthquakeList.get(position).getLocation());
-        holder.tvMagnitude.setText("Magnitude \n" + String.valueOf(earthquakeList.get(position).getMagnitude()));
+        holder.tvMagnitude.setText("M" + String.valueOf(earthquakeList.get(position).getMagnitude()));
         if (earthquakeList.get(position).getMagnitude() <= 1){
             holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level1));
         }
@@ -119,6 +121,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        holder.tvDepth.setText("Depth \n" + String.valueOf(earthquakeList.get(position).getDepth()));
+        holder.tvDepth.setVisibility(View.GONE);
+
         holder.tvDate.setText("Publication Date \n" + formatPubDate);
         holder.tvDate.setVisibility(View.GONE);
 
@@ -131,22 +137,25 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         holder.tvLink.setText("Link \n " + earthquakeList.get(position).getLink());
         holder.tvLink.setVisibility(View.GONE);
 
+        holder.btnExpand.setText(R.string.detail);
         holder.btnExpand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(holder.btnExpand.getText().toString().equals("Details")){
+                    holder.tvDepth.setVisibility(View.VISIBLE);
                     holder.tvDate.setVisibility(View.VISIBLE);
                     holder.tvGeoLat.setVisibility(View.VISIBLE);
                     holder.tvGeoLong.setVisibility(View.VISIBLE);
                     holder.tvLink.setVisibility(View.VISIBLE);
-                    holder.btnExpand.setText("Close");
+                    holder.btnExpand.setText(R.string.close);
                 }
                 else{
+                    holder.tvDepth.setVisibility(View.GONE);
                     holder.tvDate.setVisibility(View.GONE);
                     holder.tvGeoLat.setVisibility(View.GONE);
                     holder.tvGeoLong.setVisibility(View.GONE);
                     holder.tvLink.setVisibility(View.GONE);
-                    holder.btnExpand.setText("Details");
+                    holder.btnExpand.setText(R.string.detail);
                 }
             }
         });
@@ -166,4 +175,5 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             return 0;
         }
     }
+
 }
