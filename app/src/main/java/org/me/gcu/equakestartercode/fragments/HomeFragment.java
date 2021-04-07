@@ -57,12 +57,11 @@ public class HomeFragment extends Fragment implements OnClickListener
     private RecyclerView.Adapter rvAdapter;
     private ArrayList<Earthquake> recentList = new ArrayList<>();
     private Boolean updating;
-    private  AppDatabase db;
+    private AppDatabase db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         Log.e("MyTag","in onCreate");
         // Set up the raw links to the graphical components
         startButton = (Button)view.findViewById(R.id.startButton);
@@ -314,13 +313,17 @@ public class HomeFragment extends Fragment implements OnClickListener
                 }
                 startButton.setEnabled(true);
                 startButton.setText("Update Data");
-                updateData(result);
                 pbData.setVisibility(View.INVISIBLE);
             }
         }
 
         public void run() {
-            new myTask().execute(urlSource);
+            try {
+                new myTask().execute(urlSource);
+            }
+            catch (RuntimeException e){
+                Log.e("RunTimeException", e.toString());
+            }
         }
     }
 
