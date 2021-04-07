@@ -44,8 +44,6 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
     private Earthquake shallowestEq;
     private Earthquake deepestEq;
     private Button btnChangeSearch;
-    private String start;
-    private  String end;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +85,10 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
             ArrayList<String> searchCriteria = params[0];
             if (searchCriteria.size() > 1){
                 Log.e("Search Criteria", searchCriteria.get(0) + " to " + searchCriteria.get(1));
+
+                String start = "";
+                String end = "";
+
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     SimpleDateFormat sdfSearchFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -110,14 +112,27 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
             }
             else {
                 Log.e("Search Criteria", searchCriteria.get(0));
-                northEq = db.earthquakeDao().getNorthEarthquake(searchCriteria.get(0));
-                southEq = db.earthquakeDao().getSouthEarthquake(searchCriteria.get(0));
-                eastEq = db.earthquakeDao().getEastEarthquake(searchCriteria.get(0));
-                westEq = db.earthquakeDao().getWestEarthquake(searchCriteria.get(0));
-                largestMagEq = db.earthquakeDao().getLargestMagnitudeEarthquake(searchCriteria.get(0));
-                shallowestEq = db.earthquakeDao().getShallowestEarthquake(searchCriteria.get(0));
-                deepestEq = db.earthquakeDao().getDeepestEarthquake(searchCriteria.get(0));
-                return (ArrayList<Earthquake>) db.earthquakeDao().getEarthquakesByDate(searchCriteria.get(0));
+
+                String date = "";
+
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat sdfSearchFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date1 = sdf.parse(searchCriteria.get(0));
+                    date = sdfSearchFormat.format(date1);
+                }
+                catch (Exception e){
+                    Log.e("Exception", e.toString());
+                }
+
+                northEq = db.earthquakeDao().getNorthEarthquake(date);
+                southEq = db.earthquakeDao().getSouthEarthquake(date);
+                eastEq = db.earthquakeDao().getEastEarthquake(date);
+                westEq = db.earthquakeDao().getWestEarthquake(date);
+                largestMagEq = db.earthquakeDao().getLargestMagnitudeEarthquake(date);
+                shallowestEq = db.earthquakeDao().getShallowestEarthquake(date);
+                deepestEq = db.earthquakeDao().getDeepestEarthquake(date);
+                return (ArrayList<Earthquake>) db.earthquakeDao().getEarthquakesByDate(date);
             }
         }
 
