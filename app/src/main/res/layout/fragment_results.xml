@@ -7,17 +7,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shirley Ng S1626790"/>
+        android:text="@string/student_details"/>
     <Button
         android:id="@+id/btnChangeSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Search Criteria"
+        android:text="@string/change_search_criteria"
         android:layout_margin="10dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Earthquake Summary for"
+        android:text="@string/earthquake_summary_for"
         android:textSize="20sp"
         android:textStyle="bold"/>
     <TextView
@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Most Northernly"
+            android:text="@string/most_northernly"
             android:textSize="16dp"
             android:layout_marginRight="90dp"
             android:textStyle="bold"/>
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
-            android:text="Most Easternly"
+            android:text="@string/most_easternly"
             android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
@@ -75,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Most Southernly"
+            android:text="@string/most_southernly"
             android:textSize="16dp"
             android:layout_marginRight="90dp"
             android:textStyle="bold"/>
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
-            android:text="Most Westernly"
+            android:text="@string/most_westernly"
             android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
@@ -103,7 +103,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Largest Magnitude Earthquake"
+        android:text="@string/largest_magnitude_earthquake"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
         android:textSize="16dp"
@@ -121,7 +121,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Deepest Earthquake"
+            android:text="@string/deepest_earthquake"
             android:textSize="16dp"
             android:layout_marginRight="60dp"
             android:textStyle="bold"/>
@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
-            android:text="Shallowest Earthquake"
+            android:text="@string/shallowest_earthquake"
             android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout

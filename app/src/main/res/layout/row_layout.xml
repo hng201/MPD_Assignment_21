@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="20dp"
-            android:text="Location"
+            android:text="@string/location"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="20dp"
-            android:text="Magnitude"
+            android:text="@string/magnitude"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date published"
+            android:text="@string/date_published"
             android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvLocation"/>
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="Link"
+            android:text="@string/link"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvGeoLat" />
 
@@ -54,7 +54,7 @@
             android:id="@+id/tvGeoLat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GeoLat"
+            android:text="@string/geolat"
             android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvGeoLong"
@@ -63,7 +63,7 @@
             android:id="@+id/tvGeoLong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GeoLong"
+            android:text="@string/geolong"
             android:layout_margin="20dp"
             app:layout_constraintStart_toEndOf="@id/tvGeoLat"
             app:layout_constraintTop_toBottomOf="@id/tvDate"/>
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:text="Details"
+            android:text="@string/details"
             android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvLink"

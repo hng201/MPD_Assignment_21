@@ -8,22 +8,22 @@
         android:id="@+id/btnHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Back"
+        android:text="@string/back"
         android:layout_margin="20dp"/>
     <TextView
         android:id="@+id/tvStudentNameID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shirley Ng - S1626790"/>
+        android:text="@string/student_details"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Earthquake Search"
+        android:text="@string/earthquake_search"
         android:textSize="22sp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Limitted to past 50 days"
+        android:text="@string/limited_to_past_50_days"
         android:textStyle="bold"
         android:layout_margin="10dp"/>
    <RadioGroup
@@ -36,13 +36,13 @@
            android:id="@+id/rbtnDate"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="By Date"
+           android:text="@string/by_date"
            android:layout_marginRight="15dp"/>
        <RadioButton
            android:id="@+id/rbtnDateRange"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="By Date Range"/>
+           android:text="@string/by_date_range"/>
    </RadioGroup>
     <ViewSwitcher
         android:id="@+id/viewSwitcher"
@@ -57,24 +57,24 @@
                 android:id="@+id/tvSearchByDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search By Date"
+                android:text="@string/search_by_date"
                 android:textSize="20sp"
-                android:layout_marginTop="100px"/>
+                android:layout_marginTop="100dp"/>
 
             <EditText
                 android:id="@+id/etDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Select Date"
-                android:layout_marginTop="20px"
+                android:hint="@string/select_date"
+                android:layout_marginTop="20dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"/>
             <Button
                 android:id="@+id/btnSearchByDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search"
-                android:layout_marginTop="20px"/>
+                android:text="@string/search"
+                android:layout_marginTop="20dp"/>
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical" android:layout_width="match_parent"
@@ -84,37 +84,37 @@
                 android:id="@+id/tvSearchByDateRange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search By Date Range"
+                android:text="@string/search_by_date_range"
                 android:textSize="20sp"
-                android:layout_marginTop="100px"/>
+                android:layout_marginTop="100dp"/>
             <EditText
                 android:id="@+id/etStartDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Select Date"
-                android:layout_marginTop="20px"
+                android:hint="@string/select_date"
+                android:layout_marginTop="20dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="to"
+                android:text="@string/to"
                 android:textSize="18sp"
-                android:layout_marginTop="20px"/>
+                android:layout_marginTop="20dp"/>
             <EditText
                 android:id="@+id/etEndDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Select Date"
-                android:layout_marginTop="20px"
+                android:hint="@string/select_date"
+                android:layout_marginTop="20dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"/>
             <Button
                 android:id="@+id/btnSearchByDateRange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search"
-                android:layout_marginTop="20px"/>
+                android:text="@string/search"
+                android:layout_marginTop="20dp"/>
         </LinearLayout>
     </ViewSwitcher>
     <TextView

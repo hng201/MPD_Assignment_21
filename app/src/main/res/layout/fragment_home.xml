@@ -10,7 +10,7 @@
             android:id="@+id/pbData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10px"
+            android:layout_margin="10dp"
             style="@android:style/Widget.ProgressBar.Horizontal" />
 
         <TextView
@@ -27,12 +27,12 @@
                 android:id="@+id/btnEarthquake"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Earthquake Search"
+                android:text="@string/earthquake_search"
                 android:layout_marginRight="8dp"/>
-            <Button android:id="@+id/startButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Press to get data"/>
+            <Button android:id="@+id/startButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/press_to_get_data"/>
 
         </LinearLayout>
-        <TextView android:id="@+id/acknowledgement" android:layout_width="match_parent" android:layout_height="match_parent" android:textSize="20sp" android:text="Contains British Geological Survey materials ©NERC 2019"/>
+        <TextView android:id="@+id/acknowledgement" android:layout_width="match_parent" android:layout_height="match_parent" android:textSize="20sp" android:text="@string/data_copyright"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvData"
             android:layout_width="match_parent"
