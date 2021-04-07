@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">EQuakeStarterCode</string>
+    <string name="earthquake_app">Earthquake App</string>
+    <string name="map_view">Map View</string>
+    <string name="earthquake_search">Earthquake Search</string>
+    <string name="press_to_get_data">Press to get data</string>
+    <string name="data_copyright">Contains British Geological Survey materials ©NERC 2019</string>
+    <string name="student_details">Shirley Ng S1626790</string>
+    <string name="change_search_criteria">Change Search Criteria</string>
+    <string name="earthquake_summary_for">Earthquake Summary for</string>
+    <string name="most_northernly">Most Northernly</string>
+    <string name="most_easternly">Most Easternly</string>
+    <string name="most_southernly">Most Southernly</string>
+    <string name="most_westernly">Most Westernly</string>
+    <string name="largest_magnitude_earthquake">Largest Magnitude Earthquake</string>
+    <string name="deepest_earthquake">Deepest Earthquake</string>
+    <string name="shallowest_earthquake">Shallowest Earthquake</string>
+    <string name="limited_to_past_50_days">Limited to past 50 days</string>
+    <string name="by_date">By Date</string>
+    <string name="by_date_range">By Date Range</string>
+    <string name="search_by_date">Search By Date</string>
+    <string name="select_date">Select Date</string>
+    <string name="search">Search</string>
+    <string name="search_by_date_range">Search By Date Range</string>
+    <string name="back">Back</string>
+    <string name="to">to</string>
+    <string name="location">Location</string>
+    <string name="magnitude">Magnitude</string>
+    <string name="date_published">Date published</string>
+    <string name="link">Link</string>
+    <string name="geolat">GeoLat</string>
+    <string name="geolong">GeoLong</string>
+    <string name="details">Details</string>
 </resources>
