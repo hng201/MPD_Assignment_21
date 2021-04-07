@@ -224,7 +224,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                                 String temp = xpp.nextText();
                                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.ENGLISH);
                                 Date pubDate = sdf.parse(temp);
-                                SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+                                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                                 String strDate = sdf2.format(pubDate);
                                 earthquake.setPubDate(strDate);
                                 Log.e("pubDate is", earthquake.getPubDate().toString());
