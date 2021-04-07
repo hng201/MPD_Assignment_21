@@ -36,6 +36,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private EditText etEndDate;
     private Button btnSearchByDate;
     private Button btnSearchByDateRange;
+    private Button btnHome;
     private RadioButton rbtnDate;
     private RadioButton rbtnDateRange;
     private DatePickerDialog dpd;
@@ -55,6 +56,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         etEndDate = view.findViewById(R.id.etEndDate);
         btnSearchByDate = view.findViewById(R.id.btnSearchByDate);
         btnSearchByDateRange = view.findViewById(R.id.btnSearchByDateRange);
+        btnHome = view.findViewById(R.id.btnHome);
         rbtnDate = view.findViewById(R.id.rbtnDate);
         rbtnDateRange = view.findViewById(R.id.rbtnDateRange);
         tvError = view.findViewById(R.id.tvError);
@@ -64,6 +66,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         etEndDate.setOnClickListener(this);
         btnSearchByDate.setOnClickListener(this);
         btnSearchByDateRange.setOnClickListener(this);
+        btnHome.setOnClickListener(this);
 
         radioGroup = view.findViewById(R.id.rgSearch);
 
@@ -115,6 +118,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         }
         else if (v == etEndDate) {
             setDate(etEndDate);
+        }
+        else if (v == btnHome) {
+            HomeFragment homeFragment = new HomeFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            // Replace current fragment with new fragment
+            transaction.replace(R.id.frameLayout, homeFragment);
+            transaction.commit();
         }
         else if (v == btnSearchByDate){
             if (etDate.getText() != null){
