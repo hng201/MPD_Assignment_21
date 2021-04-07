@@ -178,7 +178,6 @@ public class HomeFragment extends Fragment implements OnClickListener
                 }
                 earthquakeList = null;
                 Earthquake earthquake = null;
-                db.clearAllTables();
                 result = result.substring(4);
                 result = result.substring(0, result.length() - 6);
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
