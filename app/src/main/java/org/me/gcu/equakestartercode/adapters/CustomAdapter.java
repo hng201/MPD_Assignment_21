@@ -79,14 +79,35 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder(@NonNull CustomAdapter.ViewHolder holder, int position) {
         holder.tvLocation.setText(earthquakeList.get(position).getLocation());
         holder.tvMagnitude.setText("Magnitude \n" + String.valueOf(earthquakeList.get(position).getMagnitude()));
-        if (earthquakeList.get(position).getMagnitude() <= 5){
-            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.yellow));
+        if (earthquakeList.get(position).getMagnitude() <= 1){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level1));
         }
-        else if (earthquakeList.get(position).getMagnitude() <=8){
-            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.orange));
+        else if (earthquakeList.get(position).getMagnitude() <= 2){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level2));
+        }
+        else if (earthquakeList.get(position).getMagnitude() <= 3){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level3));
+        }
+        else if (earthquakeList.get(position).getMagnitude() <= 4){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level4));
+        }
+        else if (earthquakeList.get(position).getMagnitude() <= 5){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level5));
+        }
+        else if (earthquakeList.get(position).getMagnitude() <= 6){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level6));
+        }
+        else if (earthquakeList.get(position).getMagnitude() <= 7){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level7));
+        }
+        else if (earthquakeList.get(position).getMagnitude() <= 8){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level8));
+        }
+        else if (earthquakeList.get(position).getMagnitude() <= 9){
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level9));
         }
         else{
-            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.red));
+            holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level10));
         }
         
         String formatPubDate = "";

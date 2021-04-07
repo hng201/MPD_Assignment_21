@@ -7,7 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red">#ff9999</color>
-    <color name="orange">#ffbb99</color>
-    <color name="yellow">#ffdd99</color>
+    <!--Colours for different earthquake levels -->
+    <color name="level10">#FF5722</color>
+    <color name="level9">#FF9800</color>
+    <color name="level8">#FFC107</color>
+    <color name="level7">#FFEB3B</color>
+    <color name="level6">#2196F3</color>
+    <color name="level5">#03A9F4</color>
+    <color name="level4">#008074</color>
+    <color name="level3">#009688</color>
+    <color name="level2">#4CAF50</color>
+    <color name="level1">#8BC34A</color>
 </resources>
