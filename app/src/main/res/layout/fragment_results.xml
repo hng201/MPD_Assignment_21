@@ -18,32 +18,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Earthquake Summary for"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/tvSearchCriteria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"/>
+        android:textSize="16sp" />
     <TextView
         android:id="@+id/tvEarthquakeNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp"
         android:textStyle="bold"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="15dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Most Northernly"
-            android:layout_marginRight="20dp"/>
+            android:textSize="16dp"
+            android:layout_marginRight="90dp"
+            android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Most Easternly"/>
+            android:textSize="16dp"
+            android:text="Most Easternly"
+            android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -53,7 +60,7 @@
             android:id="@+id/tvNorth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="30dp"/>
         <TextView
             android:id="@+id/tvEast"
             android:layout_width="wrap_content"
@@ -63,16 +70,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="15dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Most Southernly"
-            android:layout_marginRight="20dp"/>
+            android:textSize="16dp"
+            android:layout_marginRight="90dp"
+            android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Most Westernly"/>
+            android:textSize="16dp"
+            android:text="Most Westernly"
+            android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -82,7 +94,7 @@
             android:id="@+id/tvSouth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="30dp"/>
         <TextView
             android:id="@+id/tvWest"
             android:layout_width="wrap_content"
@@ -91,7 +103,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Largest Magnitude Earthquake"/>
+        android:text="Largest Magnitude Earthquake"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="16dp"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/tvLargeMag"
         android:layout_width="wrap_content"
@@ -100,16 +116,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="15dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Deepest Earthquake"
-            android:layout_marginRight="20dp"/>
+            android:textSize="16dp"
+            android:layout_marginRight="60dp"
+            android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shallowest Earthquake"/>
+            android:textSize="16dp"
+            android:text="Shallowest Earthquake"
+            android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -119,7 +140,7 @@
             android:id="@+id/tvDeepest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="30dp"/>
         <TextView
             android:id="@+id/tvShallowest"
             android:layout_width="wrap_content"
