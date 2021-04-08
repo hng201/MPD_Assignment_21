@@ -175,6 +175,7 @@ public class HomeFragment extends Fragment implements OnClickListener
                     }
 
                 }
+                result = result.substring(0, result.length() - 6);
                 earthquakeList = null;
                 Earthquake earthquake = null;
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
