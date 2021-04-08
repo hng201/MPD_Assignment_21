@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment implements OnClickListener
         rvAdapter = new CustomAdapter(getActivity(),recentList);
         rvData.setAdapter(rvAdapter);
 
-        db = Room.databaseBuilder(getContext(), AppDatabase.class, "db-earthquake").build();
+        db = Room.databaseBuilder(getContext(), AppDatabase.class, "db-earthquake").fallbackToDestructiveMigration().build();
         updating = false;
 
         Timer timer = new Timer();
