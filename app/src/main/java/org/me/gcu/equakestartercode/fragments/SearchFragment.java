@@ -127,7 +127,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             transaction.commit();
         }
         else if (v == btnSearchByDate){
-            if (etDate.getText() != null){
+            if (etDate.getText().toString().equals("")){
+                tvError.setText("Error: No Date Selected for Search");
+            }
+            else {
                 SearchResultFragment searchResultFragment = new SearchResultFragment();
                 ArrayList<String> dates = new ArrayList<>();
                 dates.add(etDate.getText().toString());
@@ -137,12 +140,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 transaction.replace(R.id.frameLayout, searchResultFragment);
                 transaction.commit();
             }
-            else {
-                tvError.setText("Error: No Date Selected for Search");
-            }
         }
         else if (v == btnSearchByDateRange){
-            if (etStartDate.getText() != null && etEndDate.getText() != null){
+            if (etStartDate.getText().toString().equals("") || etEndDate.getText().toString().equals("")){
+                tvError.setText("Error: Missing Date(s) for Date Range Search");
+            }
+            else {
                 SearchResultFragment searchResultFragment = new SearchResultFragment();
                 ArrayList<String> dates = new ArrayList<>();
                 dates.add(etStartDate.getText().toString());
@@ -152,9 +155,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 // Replace current fragment with new fragment
                 transaction.replace(R.id.frameLayout, searchResultFragment);
                 transaction.commit();
-            }
-            else {
-                tvError.setText("Error: Missing Date(s) for Date Range Search");
             }
         }
         else if (rbtnDate.isChecked()){
