@@ -310,7 +310,9 @@ public class HomeFragment extends Fragment implements OnClickListener
                     tvProgress.setText("Download complete");
                     updating = true;
                 }
-                updateData(result);
+                if (result != null){
+                    updateData(result);
+                }
                 startButton.setEnabled(true);
                 startButton.setText("Update Data");
                 pbData.setVisibility(View.INVISIBLE);
