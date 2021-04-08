@@ -2,6 +2,7 @@ package org.me.gcu.equakestartercode.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 /**
  * Shirley Ng S1626790
  */
-@Entity(tableName = "earthquake")
+@Entity(tableName = "earthquake", indices = {@Index(value = {"link"}, unique = true)})
 public class Earthquake implements Serializable {
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "earthquake_id")
     private Integer eid;
