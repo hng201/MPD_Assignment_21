@@ -45,12 +45,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/by_date"
                     android:layout_marginTop="30dp"
-                    android:layout_marginBottom="40dp"/>
+                    android:layout_marginBottom="20dp"/>
                 <RadioButton
                     android:id="@+id/rbtnDateRange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/by_date_range"/>
+                    android:text="@string/by_date_range"
+                    android:layout_marginBottom="20dp"/>
             </RadioGroup>
             <TextView
                 android:id="@+id/tvError"
