@@ -82,18 +82,25 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
         protected ArrayList<Earthquake> doInBackground(ArrayList<String>... params) {
             Context context = getContext();
             AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "db-earthquake").build();
+            // Get the search criteria from params[0]
             ArrayList<String> searchCriteria = params[0];
+            // Check to see if there are more than one date
             if (searchCriteria.size() > 1){
+                // Log the search criteria
                 Log.e("Search Criteria", searchCriteria.get(0) + " to " + searchCriteria.get(1));
 
                 String start = "";
                 String end = "";
 
                 try {
+                    // Foramtters to convert date into suitable format for
+                    // Room DB querying of dates
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     SimpleDateFormat sdfSearchFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    // Convert strings into date
                     Date date1 = sdf.parse(searchCriteria.get(0));
                     Date date2 = sdf.parse(searchCriteria.get(1));
+                    // Format dates into string query format
                     start = sdfSearchFormat.format(date1);
                     end = sdfSearchFormat.format(date2);
                 }
@@ -101,6 +108,7 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
                     Log.e("Exception", e.toString());
                 }
 
+                // Get earthquake for each category
                 northEq = db.earthquakeDao().getNorthEarthquakeByDateRange(start, end);
                 southEq = db.earthquakeDao().getSouthEarthquakeByDateRange(start, end);
                 eastEq = db.earthquakeDao().getEastEarthquakeByDateRange(start, end);
@@ -108,23 +116,31 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
                 largestMagEq = db.earthquakeDao().getLargestMagnitudeEarthquakeByDateRange(start, end);
                 shallowestEq = db.earthquakeDao().getShallowestEarthquakeByDateRange(start, end);
                 deepestEq = db.earthquakeDao().getDeepestEarthquakeByDateRange(start, end);
+
+                // Return filtered earthquake list
                 return (ArrayList<Earthquake>) db.earthquakeDao().getEarthquakesByDateRange(start, end);
             }
             else {
+                // Log search criteria
                 Log.e("Search Criteria", searchCriteria.get(0));
 
                 String date = "";
 
                 try {
+                    // Foramtters to convert date into suitable format for
+                    // Room DB querying of date
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     SimpleDateFormat sdfSearchFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    // Convert strings into date
                     Date date1 = sdf.parse(searchCriteria.get(0));
+                    // Format dates into string query format
                     date = sdfSearchFormat.format(date1);
                 }
                 catch (Exception e){
                     Log.e("Exception", e.toString());
                 }
 
+                // Get earthquake for each category
                 northEq = db.earthquakeDao().getNorthEarthquake(date);
                 southEq = db.earthquakeDao().getSouthEarthquake(date);
                 eastEq = db.earthquakeDao().getEastEarthquake(date);
@@ -132,6 +148,8 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
                 largestMagEq = db.earthquakeDao().getLargestMagnitudeEarthquake(date);
                 shallowestEq = db.earthquakeDao().getShallowestEarthquake(date);
                 deepestEq = db.earthquakeDao().getDeepestEarthquake(date);
+
+                // Return filtered earthquake list
                 return (ArrayList<Earthquake>) db.earthquakeDao().getEarthquakesByDate(date);
             }
         }
@@ -140,24 +158,33 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
         protected void onPostExecute(ArrayList<Earthquake> result)
         {
             super.onPostExecute(result);
-            Log.e("List", result.toString());
+            // Log the content of the filtered earthquake list
             Log.e("Filtered List", result.toString());
+            // If there are more than one date
             if (dates.size() > 1){
+                // Update the text view to show the search criteria
                 tvSearchCriteria.setText(dates.get(0) + " to " + dates.get(1));
             }
             else{
+                // Update the text view to show the search criteria
                 tvSearchCriteria.setText(dates.get(0));
             }
+
             if (result.isEmpty()){
+                // Update text view to display no earthquakes found
                 tvEarthquakeNo.setText("No Earthquakes Found");
             }
             else {
                 getEarthquakeSummary();
+                // Update text view to display the number of earthquakes found
                 tvEarthquakeNo.setText("Number of Earthquakes Found: " + result.size());
             }
         }
     }
 
+     /**
+      * Updates the textview content for each category
+      */
     private void getEarthquakeSummary() {
         String north = northEq.getLocation() + "\n" + northEq.getGeoLat() + "," + northEq.getGeoLong();
         tvNorth.setText(north);
@@ -175,6 +202,10 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
         tvDeepest.setText(deepest);
     }
 
+     /**
+      * Used by SearchFragment to pass the search criteria to this fragment
+      * @param temp
+      */
     public void setDates(ArrayList<String> temp){
         dates = temp;
     }
