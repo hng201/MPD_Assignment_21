@@ -32,4 +32,6 @@
     <string name="geolong">GeoLong</string>
     <string name="details">Details</string>
     <string name="depth">Depth</string>
+    <string name="detail">Details</string>
+    <string name="close">Close</string>
 </resources>
