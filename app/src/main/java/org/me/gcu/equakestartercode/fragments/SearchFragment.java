@@ -85,7 +85,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setDate(EditText et){
+        // Display the date picker dialog
         dpd.show();
+
+        // Get the value of the date selected
         dpd.setOnDateSetListener( new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -94,12 +97,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        // Set date to be shown in edit text when the date picker dialog is dismissed
         dpd.setOnDismissListener( new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 Date temp = cal.getTime();
+                // Formatter to change how date is displayed
                 DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                // Format the date
                 String strDate = sdf.format(temp);
+                // Display the date in the edit text
                 et.setText(strDate);
             }
         });
@@ -127,13 +134,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             transaction.commit();
         }
         else if (v == btnSearchByDate){
+            // Check if no date has been selected
             if (etDate.getText().toString().equals("")){
+                // Display error message
                 tvError.setText("Error: No Date Selected for Search");
             }
             else {
                 SearchResultFragment searchResultFragment = new SearchResultFragment();
+                // Create an arraylist to store date to search
                 ArrayList<String> dates = new ArrayList<>();
+                // Add date to the arraylist
                 dates.add(etDate.getText().toString());
+                // Set the date for the arraylist in searchresultfragment
                 searchResultFragment.setDates(dates);
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 // Replace current fragment with new fragment
@@ -142,14 +154,19 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             }
         }
         else if (v == btnSearchByDateRange){
+            // Check if either edit text has no date selected
             if (etStartDate.getText().toString().equals("") || etEndDate.getText().toString().equals("")){
+                // Display error message
                 tvError.setText("Error: Missing Date(s) for Date Range Search");
             }
             else {
                 SearchResultFragment searchResultFragment = new SearchResultFragment();
+                // Create an arraylist to store the dates for searching
                 ArrayList<String> dates = new ArrayList<>();
+                // Add the dates for searching into an array list
                 dates.add(etStartDate.getText().toString());
                 dates.add(etEndDate.getText().toString());
+                // Set the dates for the arraylist in searchresultfragment
                 searchResultFragment.setDates(dates);
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 // Replace current fragment with new fragment
@@ -158,13 +175,17 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             }
         }
         else if (rbtnDate.isChecked()){
+            // Check if current selected search criteria is not by date
             if (!byDate){
+                // Switch the view
                 viewSwitcher.showNext();
                 byDate = true;
             }
         }
         else if (rbtnDateRange.isChecked()){
+            // Check if current selected search criteria is by date
             if (byDate){
+                // Switch the view
                 viewSwitcher.showNext();
                 byDate = false;
             }

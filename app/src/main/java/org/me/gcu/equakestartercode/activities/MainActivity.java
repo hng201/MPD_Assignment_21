@@ -55,7 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
     }
 
-
+    /**
+     * Check if the map view switch is checked and load the map fragment if checked.
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         if (switchMapView.isChecked()){
