@@ -70,9 +70,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     /**
-     * Replaces contents of view with location, Magnitude, Publication date, GeoLat, GeoLong and Link of the earthquake.
+     * Replaces contents of view with location, Magnitude, Depth, Publication date, GeoLat, GeoLong and Link of the earthquake.
      * Layout manager calls this method.
-     * Publication date, GeoLat, GeoLong and Link are hidden by default and will be visible when user clicks on Details button.
+     * Depth, Publication date, GeoLat, GeoLong and Link are hidden by default and will be visible when user clicks on Details button.
      * @param holder
      * @param position
      */
@@ -81,6 +81,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder(@NonNull CustomAdapter.ViewHolder holder, int position) {
         holder.tvLocation.setText(earthquakeList.get(position).getLocation());
         holder.tvMagnitude.setText("M" + String.valueOf(earthquakeList.get(position).getMagnitude()));
+        // Assigns a colour for magnitude based on its value
         if (earthquakeList.get(position).getMagnitude() <= 1){
             holder.tvMagnitude.setBackgroundColor(context.getColor(R.color.level1));
         }
@@ -114,14 +115,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         
         String formatPubDate = "";
         try {
+            // Formatters to change the date format
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            // Create new date from string
             Date pubDate = sdf.parse(earthquakeList.get(position).getPubDate());
+            // Format the date
             formatPubDate = sdf2.format(pubDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
+        // Set Textviews text and set their visibility to Gone
         holder.tvDepth.setText("Depth \n" + String.valueOf(earthquakeList.get(position).getDepth()));
         holder.tvDepth.setVisibility(View.GONE);
 
@@ -137,24 +142,35 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         holder.tvLink.setText("Link \n " + earthquakeList.get(position).getLink());
         holder.tvLink.setVisibility(View.GONE);
 
+        // Set the button text to Details
         holder.btnExpand.setText(R.string.detail);
         holder.btnExpand.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Deals with the expanding of card view to show more details
+             * about the earthquake
+             * @param v
+             */
             @Override
             public void onClick(View v) {
+                // If current button text shows Details
                 if(holder.btnExpand.getText().toString().equals("Details")){
+                    // Make the other text view visible
                     holder.tvDepth.setVisibility(View.VISIBLE);
                     holder.tvDate.setVisibility(View.VISIBLE);
                     holder.tvGeoLat.setVisibility(View.VISIBLE);
                     holder.tvGeoLong.setVisibility(View.VISIBLE);
                     holder.tvLink.setVisibility(View.VISIBLE);
+                    // Change button text to Close
                     holder.btnExpand.setText(R.string.close);
                 }
                 else{
+                    // Make the other text views Gone
                     holder.tvDepth.setVisibility(View.GONE);
                     holder.tvDate.setVisibility(View.GONE);
                     holder.tvGeoLat.setVisibility(View.GONE);
                     holder.tvGeoLong.setVisibility(View.GONE);
                     holder.tvLink.setVisibility(View.GONE);
+                    // Change button text to Details
                     holder.btnExpand.setText(R.string.detail);
                 }
             }
