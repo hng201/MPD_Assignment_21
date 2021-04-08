@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment implements OnClickListener
 {
     private Button startButton;
     private Button btnEarthquake;
-    private String result;
+    private String result = "";
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     private ProgressBar pbData;
     private TextView tvProgress;
@@ -177,8 +177,6 @@ public class HomeFragment extends Fragment implements OnClickListener
                 }
                 earthquakeList = null;
                 Earthquake earthquake = null;
-                result = result.substring(4);
-                result = result.substring(0, result.length() - 6);
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 //factory.setNamespaceAware(true);
 
