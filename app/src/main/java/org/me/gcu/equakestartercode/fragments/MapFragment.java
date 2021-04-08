@@ -1,5 +1,6 @@
 package org.me.gcu.equakestartercode.fragments;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,16 +31,20 @@ import java.util.ArrayList;
 public class MapFragment extends Fragment implements OnMapReadyCallback{
     private GoogleMap gmap;
     private ArrayList<Earthquake> earthquakeList = new ArrayList<>();
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new GetEarthquakesTask().execute();
+
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
+        context = getContext();
+        new GetEarthquakesTask().execute();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
